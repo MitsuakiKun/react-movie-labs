@@ -12,6 +12,15 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage'
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 360000,
+      refetchInterval: 360000, 
+      refetchOnWindowFocus: false
+    },
+  },
+});
 
 const App = () => {
   return (
@@ -38,12 +47,3 @@ const App = () => {
 const rootElement = createRoot( document.getElementById("root") )
 rootElement.render(<App />);
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 360000,
-      refetchInterval: 360000, 
-      refetchOnWindowFocus: false
-    },
-  },
-});

@@ -1,3 +1,4 @@
+import React, { useContext  } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -13,7 +14,6 @@ import Grid from "@mui/material/Grid";
 import img from '../../images/film-poster-placeholder.png'
 import { Link } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
-import React, { useContext  } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
 
 

@@ -18,4 +18,4 @@ const AddToFavoritesIcon = ({ movie }) => {
   );
 };
 
-export default AddToFavoritesIcon;wi
+export default AddToFavoritesIcon;
