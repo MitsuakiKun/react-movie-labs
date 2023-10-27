@@ -1,33 +1,37 @@
-import React, { useState, useEffect } from "react";
-import PageTemplate from "../components/templateMovieListPage";
+import React from "react";
 import { getUpcomingMovies } from "../api/tmdb-api";
+import PageTemplate from "../components/templateMovieListPage";
+import { useQuery } from 'react-query';
+import Spinner from '../components/spinner';
+import SelectFavoritesIcon from '../components/cardIcons/selectFavorites';
+
 
 const UpcomingMoviesPage = () => {
-    const [movies, setMovies] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const { data, error, isLoading, isError } = useQuery('upcoming', getUpcomingMovies);
+
+  if (isLoading) {
+    return <Spinner />
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>
+  }
+
+  const movies = data.results;
+  const favorites = movies.filter(m => m.favorite)
+  localStorage.setItem('favorites', JSON.stringify(favorites))
+   
+  const selectFavorite = () => true;
+
+  return (
+    <PageTemplate
+      title="Upcoming Movies"
+      movies={movies}
+      action={(movie) => {
+        return <SelectFavoritesIcon movie={movie} />
+      }}
+    />
+  );
+};
   
-    useEffect(() => {
-      getUpcomingMovies()
-        .then((upcomingMovies) => {
-          setMovies(upcomingMovies);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching upcoming movies:", error);
-          setLoading(false);
-        });
-    }, []);
-  
-    const selectFavorite = () => true;
-  
-    return (
-      <PageTemplate
-        title="Upcoming Movies"
-        movies={movies}
-        loading={loading}
-        selectFavorite={selectFavorite}
-      />
-    );
-  };
-  
-  export default UpcomingMoviesPage;
+export default UpcomingMoviesPage;
